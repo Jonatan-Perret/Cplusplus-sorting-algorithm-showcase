@@ -31,10 +31,6 @@ void drawBars(const std::vector<int>& bars) {
   SDL_RenderPresent(gRenderer);
 }
 
-void delay(int milliseconds) {
-  SDL_Delay(milliseconds);
-}
-
 void bubbleSort(std::vector<int>& arr) {
   int n = arr.size();
   for (int i = 0; i < n - 1; ++i) {
@@ -42,7 +38,6 @@ void bubbleSort(std::vector<int>& arr) {
       if (arr[j] > arr[j + 1]) {
         std::swap(arr[j], arr[j + 1]);
         drawBars(arr);
-        delay(0);
       }
     }
   }
@@ -59,7 +54,6 @@ void selectionSort(std::vector<int>& arr) {
     }
     std::swap(arr[i], arr[min_index]);
     drawBars(arr);
-    delay(0);
   }
 }
 
@@ -74,9 +68,36 @@ void insertionSort(std::vector<int>& arr) {
     }
     arr[j + 1] = key;
     drawBars(arr);
-    delay(0);
   }
 }
+
+int quickSortPartition(std::vector<int>& arr, int low, int high) {
+  int pivot = arr[high];
+  int i = (low - 1);
+  for (int j = low; j <= high - 1; ++j) {
+    if (arr[j] < pivot) {
+      ++i;
+      std::swap(arr[i], arr[j]);
+      drawBars(arr);
+    }
+  }
+  std::swap(arr[i + 1], arr[high]);
+  drawBars(arr);
+  return (i + 1);
+}
+
+void quickSort(std::vector<int>& arr, int low, int high) {
+  if (low < high) {
+    int pi = quickSortPartition(arr, low, high);
+    quickSort(arr, low, pi - 1);
+    quickSort(arr, pi + 1, high);
+  }
+}
+
+void quickSort(std::vector<int>& arr) {
+  quickSort(arr, 0, arr.size() - 1);
+}
+
 
 void randomizeArray(std::vector<int>& arr) {
   std::random_device rd;
@@ -131,6 +152,10 @@ int main() {
         else if (e.key.keysym.sym == SDLK_i) {
           std::vector<int> tempBars = bars;
           insertionSort(tempBars);
+        }
+        else if (e.key.keysym.sym == SDLK_q) {
+          std::vector<int> tempBars = bars;
+          quickSort(tempBars);
         }
         else if (e.key.keysym.sym == SDLK_r) {
           randomizeArray(bars);
