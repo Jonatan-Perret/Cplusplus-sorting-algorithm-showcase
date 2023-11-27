@@ -14,7 +14,7 @@ This C++ project demonstrates the visualization of various sorting algorithms us
 
     ```bash
     git clone https://github.com/Jonatan-Perret/Cplusplus-sorting-algorithm-showcase.git
-    cd sorting-algorithm-visualization-sdl2
+    cd Cplusplus-sorting-algorithm-showcase
     ```
 
 2. **Open the project in CLion:**
